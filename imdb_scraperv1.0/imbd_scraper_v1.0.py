@@ -13,7 +13,7 @@ from itertools import chain
 def scrape_imdb_moviecasts(imdb_id):
     url = f"https://www.imdb.com/{imdb_id}/"
 
-    # For bypassing the scrapper stopper by making it seem like hte request is coming from a PC
+    # For bypassing the scrapper stopper by making it seem like the request is coming from a PC
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
     
     # Capture the entire html file
@@ -23,8 +23,7 @@ def scrape_imdb_moviecasts(imdb_id):
         soup = BeautifulSoup(response.text, 'html.parser')
 
         # Using data-test to extract 
-        # find --> finds one
-        # find_all --> finds all the ones
+
         cast_prep=soup.find('section',attrs={"data-testid": "title-cast"})
         casts=cast_prep.find('div',attrs={"data-testid": "shoveler"})
         casts_names=casts.find('div',attrs={"data-testid": "shoveler-items-container"})
@@ -33,17 +32,9 @@ def scrape_imdb_moviecasts(imdb_id):
             cast_name_list.append(names.text)
         return cast_name_list
 
-    # # The name used for data-testid
-    # cast="title-cast"
-
-    # # Url code for imdb movie
-    # imdb_id = 'tt0111162'
-
-    # extracted_html = scrape_imdb_moviecasts(imdb_id,cast)
-    # print(extracted_html)
 
 def login():
-        #  To run wihtout opening google
+
     chrome_options = Options()
     chrome_options.add_argument("--windowsize=1920,1000")
 
@@ -65,8 +56,8 @@ def login():
     # Submit the login form
     password_field.send_keys(Keys.RETURN)
 
-    # Wait for the login to complete (you might need to adjust this time)
-    time.sleep(1) 
+    # Time to fillin captcha otheriwise it will just wait 
+    captcha_bypass()
     goto_watchlist(driver)
     print("Login Succesfull")
     return getlink_title(driver)
@@ -86,7 +77,8 @@ def getlink_title(driver):
         link_lists.append(links)
     return (link_lists)
 
-def common_ones():
+def captcha_bypass():
+    time.sleep(15)
     pass
 
 def login2():
