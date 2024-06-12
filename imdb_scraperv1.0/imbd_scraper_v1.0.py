@@ -1,13 +1,17 @@
 
 import requests
+import os
 import time
 import pandas as pd
 from bs4 import BeautifulSoup
+from itertools import chain
+from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from itertools import chain
+
+
 
 # Function to extract cast names for movies from IMDB
 def scrape_imdb_moviecasts(imdb_id):
@@ -47,8 +51,10 @@ def login():
     username_field = driver.find_element(By.XPATH,"//input[@id='ap_email']")
     password_field = driver.find_element(By.XPATH,"//input[@id='ap_password']")
 
-    username = "sinjureads@gmail.com"
-    password = "B@@kmark.9192"
+    load_dotenv()
+
+    username = os.getenv('username')
+    password = os.getenv('pass')
 
     username_field.send_keys(username)
     password_field.send_keys(password)
@@ -97,7 +103,7 @@ def login2():
     username_field = driver.find_element(By.XPATH,"//input[@id='email']")
 
     username_field.send_keys('Lord')
-    time.sleep(10)
+    time.sleep(30)
 
 def proceed():
     last_list=[]
